@@ -1,4 +1,5 @@
 use actix_web::{web, HttpResponse};
+use sqlx::PgConnection;
 
 #[derive(serde::Deserialize)]
 pub struct FormData {

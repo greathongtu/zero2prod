@@ -15,10 +15,7 @@ impl EmailClient {
         authorization_token: String,
         timeout: std::time::Duration,
     ) -> Self {
-        let http_client = Client::builder()
-            .timeout(timeout)
-            .build()
-            .unwrap();
+        let http_client = Client::builder().timeout(timeout).build().unwrap();
         Self {
             http_client,
             base_url,
@@ -42,8 +39,7 @@ impl EmailClient {
             html_body: html_content,
             text_body: text_content,
         };
-        let builder = self
-            .http_client
+        self.http_client
             .post(&url)
             .header("X-Postmark-Server-Token", &self.authorization_token)
             .json(&request_body)

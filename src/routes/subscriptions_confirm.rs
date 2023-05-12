@@ -8,22 +8,23 @@ pub struct Parameters {
 }
 
 #[allow(clippy::async_yields_async)]
-#[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, pool))]
-pub async fn confirm(parameters: web::Query<Parameters>, pool: web::Data<PgPool>) -> HttpResponse {
-    let id = match get_subscriber_id_from_token(&pool, &parameters.subscription_token).await {
-        Ok(id) => id,
-        Err(_) => return HttpResponse::InternalServerError().finish(),
-    };
-    match id {
-        // Non-existing token!
-        None => HttpResponse::Unauthorized().finish(),
-        Some(subscriber_id) => {
-            if confirm_subscriber(&pool, subscriber_id).await.is_err() {
-                return HttpResponse::InternalServerError().finish();
-            }
-            HttpResponse::Ok().finish()
-        }
-    }
+#[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters))]
+pub async fn confirm(parameters: web::Query<Parameters>) -> HttpResponse {
+    HttpResponse::Ok().finish()
+    // let id = match get_subscriber_id_from_token(&pool, &parameters.subscription_token).await {
+    //     Ok(id) => id,
+    //     Err(_) => return HttpResponse::InternalServerError().finish(),
+    // };
+    // match id {
+    //     // Non-existing token!
+    //     None => HttpResponse::Unauthorized().finish(),
+    //     Some(subscriber_id) => {
+    //         if confirm_subscriber(&pool, subscriber_id).await.is_err() {
+    //             return HttpResponse::InternalServerError().finish();
+    //         }
+    //         HttpResponse::Ok().finish()
+    //     }
+    // }
 }
 
 #[allow(clippy::async_yields_async)]

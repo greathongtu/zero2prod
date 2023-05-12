@@ -37,6 +37,9 @@ services:
       - path: /
     
     env:
+      - key: APP_APPLICATION_BASE_URL
+        scope: RUN_TIME
+        value: ${APP_URL}
       - key: APP_DATABASE__USERNAME
         scope: RUN_TIME
         value: ${newsletter.USERNAME}

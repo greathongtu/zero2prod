@@ -88,8 +88,7 @@ async fn get_confirmed_subscribers(
     struct Row {
         email: String,
     }
-    let rows = sqlx::query_as!(
-        Row,
+    let rows = sqlx::query!(
         r#"
         SELECT email
         FROM subscriptions

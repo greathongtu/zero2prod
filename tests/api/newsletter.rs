@@ -3,39 +3,6 @@ use uuid::Uuid;
 use wiremock::matchers::{any, method, path};
 use wiremock::{Mock, ResponseTemplate};
 
-#[tokio::test]
-async fn newsletters_are_not_delivered_to_unconfirmed_subscribers() {
-    // Arrange
-    let app = spawn_app().await;
-    create_unconfirmed_subscriber(&app).await;
-
-    Mock::given(any())
-        .respond_with(ResponseTemplate::new(200))
-        // We assert that no request is fired at Postmark!
-        .expect(0)
-        .mount(&app.email_server)
-        .await;
-
-    // Act
-
-    // A sketch of the newsletter payload structure.
-    // We might change it later on.
-    let newsletter_request_body = serde_json::json!({
-         "title": "Newsletter title",
-         "content": {
-             "text": "Newsletter body as plain text",
-             "html": "<p>Newsletter body as HTML</p>",
-         }
-    });
-    let response = app.post_newsletters(newsletter_request_body).await;
-
-    // Assert
-    assert_eq!(response.status().as_u16(), 200);
-    // Mock verifies on Drop that we haven't sent the newsletter email
-}
-
-/// Use the public API of the application under test to create
-/// an unconfirmed subscriber.
 async fn create_unconfirmed_subscriber(app: &TestApp) -> ConfirmationLinks {
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
 
@@ -58,18 +25,43 @@ async fn create_unconfirmed_subscriber(app: &TestApp) -> ConfirmationLinks {
         .unwrap()
         .pop()
         .unwrap();
-    app.get_confirmation_links(&email_request)
+    app.get_confirmation_links(email_request)
 }
 
 async fn create_confirmed_subscriber(app: &TestApp) {
-    // We can then reuse the same helper and just add
-    // an extra step to actually call the confirmation link!
-    let confirmation_link = create_unconfirmed_subscriber(app).await;
-    reqwest::get(confirmation_link.html)
+    let confirmation_link = create_unconfirmed_subscriber(app).await.html;
+    reqwest::get(confirmation_link)
         .await
         .unwrap()
         .error_for_status()
         .unwrap();
+}
+
+#[tokio::test]
+async fn newsletters_are_not_delivered_to_unconfirmed_subscribers() {
+    // Arrange
+    let app = spawn_app().await;
+    create_unconfirmed_subscriber(&app).await;
+
+    Mock::given(any())
+        .respond_with(ResponseTemplate::new(200))
+        .expect(0)
+        .mount(&app.email_server)
+        .await;
+
+    // Act
+    let newsletter_request_body = serde_json::json!({
+        "title": "Newsletter title",
+        "content": {
+            "text": "Newsletter body as plain text",
+            "html": "<p>Newsletter body as HTML</p>",
+        }
+    });
+    let response = app.post_newsletters(newsletter_request_body).await;
+
+    // Assert
+    assert_eq!(response.status().as_u16(), 200);
+    // Mock verifies on Drop that we haven't sent the newsletter email
 }
 
 #[tokio::test]
@@ -89,8 +81,8 @@ async fn newsletters_are_delivered_to_confirmed_subscribers() {
     let newsletter_request_body = serde_json::json!({
         "title": "Newsletter title",
         "content": {
-             "text": "Newsletter body as plain text",
-             "html": "<p>Newsletter body as HTML</p>",
+            "text": "Newsletter body as plain text",
+            "html": "<p>Newsletter body as HTML</p>",
         }
     });
     let response = app.post_newsletters(newsletter_request_body).await;
@@ -115,7 +107,9 @@ async fn newsletters_returns_400_for_invalid_data() {
             "missing title",
         ),
         (
-            serde_json::json!({"title": "Newsletter!"}),
+            serde_json::json!({
+                "title": "Newsletter!"
+            }),
             "missing content",
         ),
     ];
@@ -127,6 +121,7 @@ async fn newsletters_returns_400_for_invalid_data() {
         assert_eq!(
             400,
             response.status().as_u16(),
+            // Additional customised error message on test failure
             "The API did not fail with 400 Bad Request when the payload was {}.",
             error_message
         );

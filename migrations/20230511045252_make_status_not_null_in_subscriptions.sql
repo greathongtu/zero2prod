@@ -1,6 +1,4 @@
--- We wrap the whole migration in a transaction to make sure
--- it succeeds or fails atomically.
--- `sqlx` does not do it automatically for us.
+-- Add migration script here
 BEGIN;
     -- Backfill `status` for historical entries
     UPDATE subscriptions

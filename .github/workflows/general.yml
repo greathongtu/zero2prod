@@ -6,11 +6,11 @@ on:
   # this specific branch (a.k.a. book chapter).
   push:
     branches:
-      - root-chapter-10-part1
+      - root-chapter-10-part2
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches:
-      - root-chapter-10-part1
+      - root-chapter-10-part2
 
 env:
   CARGO_TERM_COLOR: always
@@ -30,6 +30,10 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
@@ -110,6 +114,10 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

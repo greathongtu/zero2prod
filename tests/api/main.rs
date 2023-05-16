@@ -5,3 +5,4 @@ mod subscriptions;
 mod subscriptions_confirm;
 mod test_user;
 mod login;
+mod change_password;

@@ -1,12 +1,9 @@
 use crate::authentication::reject_anonymous_users;
 use crate::configuration::{DatabaseSettings, Settings};
 use crate::email_client::EmailClient;
-use crate::routes::admin_dashboard;
-use crate::routes::log_out;
-use crate::routes::{change_password, change_password_form};
 use crate::routes::{
-    confirm, health_check, home, login, login_form, publish_newsletter, publish_newsletter_form,
-    subscribe,
+    admin_dashboard, change_password, change_password_form, confirm, health_check, home, log_out,
+    login, login_form, publish_newsletter, publish_newsletter_form, subscribe,
 };
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -30,21 +27,8 @@ pub struct Application {
 
 impl Application {
     pub async fn build(configuration: Settings) -> Result<Self, anyhow::Error> {
-        let connection_pool = get_connection_pool(&configuration.database)
-            .await
-            .expect("Failed to connect to Postgres.");
-
-        let sender_email = configuration
-            .email_client
-            .sender()
-            .expect("Invalid sender email address.");
-        let timeout = configuration.email_client.timeout();
-        let email_client = EmailClient::new(
-            configuration.email_client.base_url,
-            sender_email,
-            configuration.email_client.authorization_token,
-            timeout,
-        );
+        let connection_pool = get_connection_pool(&configuration.database);
+        let email_client = configuration.email_client.client();
 
         let address = format!(
             "{}:{}",
@@ -74,11 +58,10 @@ impl Application {
     }
 }
 
-pub async fn get_connection_pool(configuration: &DatabaseSettings) -> Result<PgPool, sqlx::Error> {
+pub fn get_connection_pool(configuration: &DatabaseSettings) -> PgPool {
     PgPoolOptions::new()
         .acquire_timeout(std::time::Duration::from_secs(2))
-        .connect_with(configuration.with_db())
-        .await
+        .connect_lazy_with(configuration.with_db())
 }
 
 pub struct ApplicationBaseUrl(pub String);
@@ -89,17 +72,15 @@ async fn run(
     email_client: EmailClient,
     base_url: String,
     hmac_secret: Secret<String>,
-    redis_url: Secret<String>,
+    redis_uri: Secret<String>,
 ) -> Result<Server, anyhow::Error> {
     let db_pool = Data::new(db_pool);
     let email_client = Data::new(email_client);
     let base_url = Data::new(ApplicationBaseUrl(base_url));
-
     let secret_key = Key::from(hmac_secret.expose_secret().as_bytes());
     let message_store = CookieMessageStore::builder(secret_key.clone()).build();
     let message_framework = FlashMessagesFramework::builder(message_store).build();
-    let redis_store = RedisSessionStore::new(redis_url.expose_secret()).await?;
-
+    let redis_store = RedisSessionStore::new(redis_uri.expose_secret()).await?;
     let server = HttpServer::new(move || {
         App::new()
             .wrap(message_framework.clone())
@@ -109,12 +90,6 @@ async fn run(
             ))
             .wrap(TracingLogger::default())
             .route("/", web::get().to(home))
-            .route("/login", web::get().to(login_form))
-            .route("/login", web::post().to(login))
-            .route("/health_check", web::get().to(health_check))
-            .route("/subscriptions", web::post().to(subscribe))
-            .route("/subscriptions/confirm", web::get().to(confirm))
-            .route("/newsletters", web::post().to(publish_newsletter))
             .service(
                 web::scope("/admin")
                     .wrap(from_fn(reject_anonymous_users))
@@ -125,6 +100,12 @@ async fn run(
                     .route("/password", web::post().to(change_password))
                     .route("/logout", web::post().to(log_out)),
             )
+            .route("/login", web::get().to(login_form))
+            .route("/login", web::post().to(login))
+            .route("/health_check", web::get().to(health_check))
+            .route("/subscriptions", web::post().to(subscribe))
+            .route("/subscriptions/confirm", web::get().to(confirm))
+            .route("/newsletters", web::post().to(publish_newsletter))
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())

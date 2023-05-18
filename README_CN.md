@@ -3,6 +3,8 @@
 
 该项目是根据[《Zero To Production In Rust》](https://zero2prod.com)一书中的示例实现的，该书是学习[Rust](https://www.rust-lang.org/)和[Actix-web](https://actix.rs/)框架的优秀资源。通过实现一个真实的、可投入生产的电子邮件订阅应用程序，本项目旨在帮助读者深入学习相关技术。
 
+最终版在final branch。
+
 # Key features
 * actix-web框架
 * Postgres数据库

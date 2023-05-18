@@ -6,6 +6,8 @@ Implementation of the project from the book -
 [Rust](https://www.rust-lang.org/) and the [Actix-web](https://actix.rs/)
 framework by implementing a real-world production ready email newsletter app.
 
+The final version in the "final" branch.
+
 # Key features
 * actix-web framework
 * Postgres database

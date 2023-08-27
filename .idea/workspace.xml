@@ -13,12 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d330f34f-5e94-4405-a9db-5f1fb9337c03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/health_check.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/init_db.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/health_check.rs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/health_check.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +31,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../../.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-router-0.5.1/src/path.rs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/../../.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-web-4.3.1/src/guard/mod.rs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/../../.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-web-4.3.1/src/request.rs" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-router-0.5.1/src/path.rs" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-web-4.3.1/src/guard/mod.rs" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/actix-web-4.3.1/src/request.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="37bemxci" />
@@ -61,7 +60,7 @@
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "scratch",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "//wsl$/Ubuntu/home/aaron/dev/zero2prod",
+    "last_opened_file_path": "/home/aaron/dev/zero2prod",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -121,7 +120,7 @@
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../../.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
   </component>
   <component name="RustfmtProjectSettings">
     <option name="runRustfmtOnSave" value="true" />
@@ -140,6 +139,7 @@
       <workItem from="1692893572402" duration="590000" />
       <workItem from="1692894172212" duration="1623000" />
       <workItem from="1692964527377" duration="9920000" />
+      <workItem from="1693127448183" duration="9160000" />
     </task>
     <servers />
   </component>

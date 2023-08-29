@@ -12,9 +12,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d330f34f-5e94-4405-a9db-5f1fb9337c03" name="Changes" comment="use db_pool, prepare logical db for test">
+    <list default="true" id="d330f34f-5e94-4405-a9db-5f1fb9337c03" name="Changes" comment="ensure test isolation when dealing with&#10;databases">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/configuration.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/configuration.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/subscriptions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/subscriptions.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/startup.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/startup.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/health_check.rs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/health_check.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -146,7 +150,7 @@
       <workItem from="1693127448183" duration="9160000" />
       <workItem from="1693144592628" duration="6382000" />
       <workItem from="1693234065342" duration="3000000" />
-      <workItem from="1693307932563" duration="4442000" />
+      <workItem from="1693307932563" duration="10237000" />
     </task>
     <task id="LOCAL-00001" summary="use db_pool, prepare logical db for test">
       <option name="closed" value="true" />
@@ -156,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1693314817961</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="ensure test isolation when dealing with&#10;databases">
+      <option name="closed" value="true" />
+      <created>1693316358150</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1693316358150</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,7 +177,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="use db_pool, prepare logical db for test" />
-    <option name="LAST_COMMIT_MESSAGE" value="use db_pool, prepare logical db for test" />
+    <MESSAGE value="ensure test isolation when dealing with&#10;databases" />
+    <option name="LAST_COMMIT_MESSAGE" value="ensure test isolation when dealing with&#10;databases" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

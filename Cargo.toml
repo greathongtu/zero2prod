@@ -1,0 +1,45 @@
+[package]
+name = "production"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "production"
+
+[dependencies]
+axum = { version = "0.7.5", features = ["macros"] }
+axum-server = "0.6.0"
+chrono = "0.4.38"
+config = "0.14.0"
+http-body-util = "0.1.1"
+reqwest = "0.12.4"
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
+tokio = { version = "1.37.0", features = ["full"] }
+tower = "0.4.13"
+tracing = "0.1.40"
+tracing-subscriber = "0.3.18"
+[dependencies.uuid]
+version = "1.8.0"
+features = [
+  "v4",                # Lets you generate random UUIDs
+  "fast-rng",          # Use a faster (but still sufficiently random) RNG
+  "macro-diagnostics", # Enable better diagnostics for compile-time UUIDs
+]
+
+[dependencies.sqlx]
+version = "0.7"
+default-features = false
+features = [
+  "runtime-tokio-rustls",
+  "macros",
+  "postgres",
+  "uuid",
+  "chrono",
+  "migrate",
+]

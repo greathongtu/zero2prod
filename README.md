@@ -6,7 +6,8 @@ Implementation of the project from the book -
 framework by implementing a real-world production ready email newsletter app.
 
 The final version in the "final" branch.
-master branch is using axum framwork instead of actix-web.
+
+**master branch is using axum framwork instead of actix-web.**
 
 # Key features
 * actix-web framework
